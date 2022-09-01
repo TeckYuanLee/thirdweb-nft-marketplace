@@ -9,6 +9,10 @@ import {
   useListing,
   useMarketplace,
 } from "@thirdweb-dev/react";
+// import {
+//   TransactionResult,
+//   TransactionResultWithId,
+// } from "@thirdweb-dev/sdk/dist/src/core/types";
 import { formatDisplayAddress, hexToETH } from "../../web3utils";
 import { getEtherscanURL } from "../../config/targetChainConfig";
 import { useMutation } from "react-query";
@@ -19,7 +23,15 @@ const ListingPage: NextPage = () => {
 
   const { listingId } = router.query as { listingId: string };
 
+  /***
+   * TODO: instantiate marketplace
+   */
   const marketplace = useMarketplace(readAppContractAddresses("Marketplace"));
+
+  /***
+   * TODO instantiate listing with thirdweb SDK
+   * replaced listing and isLoading
+   */
   const { data: listing, isLoading: listingLoading } = useListing(
     marketplace,
     listingId
@@ -27,6 +39,9 @@ const ListingPage: NextPage = () => {
 
   const { mutate: handleBuy, isLoading: buyLoading } = useMutation({
     mutationFn: () => {
+      /***
+       * Write logic to execute the buy
+       */
       return marketplace!.buyoutListing(listingId, 1);
     },
     onError: (err: any) => {

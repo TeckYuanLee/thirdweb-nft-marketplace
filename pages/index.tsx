@@ -14,6 +14,10 @@ import { readAppContractAddresses } from "../config/contractAddresses";
 import { getEtherscanURL } from "../config/targetChainConfig";
 
 const Home: NextPage = () => {
+  /***
+   * TODO: instantiate marketplace and read out listings.
+   * replaced data and isLoading
+   */
   const marketplaceAddress = readAppContractAddresses("Marketplace");
   const marketplace = useMarketplace(marketplaceAddress);
   const { data, isLoading } = useActiveListings(marketplace);

@@ -15,6 +15,9 @@ export async function getServerSideProps(context: NextPageContext) {
     context.query.contractAddress;
   const tokenId: string | string[] | undefined = context.query.tokenId;
 
+  /***
+   * TODO: Get Data for NFT using alchemy
+   */
   const data = await getNftMetadata(alchemy, {
     tokenId: tokenId?.toString() ?? "",
     contract: { address: contractAddress?.toString() ?? "" },
@@ -25,13 +28,19 @@ export async function getServerSideProps(context: NextPageContext) {
 }
 
 const CreateListingPage: NextPage<{ data: string }> = ({ data }) => {
+  const [price, setPrice] = React.useState<number>(0.05);
   const router = useRouter();
   const NFT: Nft = JSON.parse(data);
-  const [price, setPrice] = React.useState<number>(0.05);
 
+  /***
+   * TODO: Instantiate marketplate
+   */
   const marketplace = useMarketplace(readAppContractAddresses("Marketplace"));
 
   const createListing = async () => {
+    /***
+     * TODO: use Thirdweb SDK to create a listing
+     */
     return marketplace!.direct.createListing({
       assetContractAddress: NFT.contract.address,
       tokenId: NFT.tokenId,
